@@ -1,0 +1,23 @@
+{
+  "name": "lab1",
+  "homepage": "https://github.com/spalonytoster/technologie-sieci-web",
+  "authors": [
+    "Maciej Posłuszny <xmachiei@gmail.com>"
+  ],
+  "description": "",
+  "main": "index.html",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "skeleton": "~2.0.4"
+  }
+}
