@@ -1,0 +1,33 @@
+// out: ../css/zad_03.css, compress: true
+
+body {
+  border-image: url("../img/listki.gif");
+  background-image: url("../img/listki.gif");
+  background-repeat: repeat-y;
+}
+
+.tresc {
+  margin-left: 100px;
+  border: solid black 2px;
+  padding: 20px;
+
+  p {
+    text-align: justify;
+    text-indent: 20px;
+  }
+
+  img {
+    float: left;
+    margin-right: 10px;
+
+    & {
+      text-indent: 0px !important;
+    }
+  }
+}
+
+img {
+  &:hover {
+    text-indent: 0px !important;
+  }
+}
