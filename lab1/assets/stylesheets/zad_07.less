@@ -1,1 +1,20 @@
 // out: ../css/zad_07.css, compress: true
+* {
+  font-size: large;
+}
+
+.C * {
+  position: relative;
+}
+
+@bottom: 30px;
+
+div.A {
+  left: 40px;
+
+  .B {
+    left: 30px;
+    bottom: @bottom;
+  }
+
+}
