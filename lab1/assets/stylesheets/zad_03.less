@@ -11,6 +11,10 @@ body {
   border: solid black 2px;
   padding: 20px;
 
+  :first-child {
+   text-indent: 0;
+ }
+
   p {
     text-align: justify;
     text-indent: 20px;
@@ -19,10 +23,6 @@ body {
   img {
     float: left;
     margin-right: 10px;
-
-    & {
-      text-indent: 0 !important;
-    }
   }
 }
 
