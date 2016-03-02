@@ -1,0 +1,27 @@
+// out: ../css/zad_01.css, compress: true
+
+@margin: 15%;
+@border-width: 2px;
+
+.wrapper(@bg-col: white, @border-col: black, @width: 50%, @height: 50%) {
+  position: absolute;
+  width: @width;
+  height: @height;
+  text-align: center;
+  position: absolute;
+  background-color: @bg-col;
+  border: solid @border-col @border-width;
+}
+
+.A {
+  .wrapper(yellow, red);
+  left: @margin;
+  z-index: 1;
+}
+
+.B {
+  .wrapper(white, blue);
+  right: @margin;
+  top: @margin + 15;
+  z-index: 2;
+}

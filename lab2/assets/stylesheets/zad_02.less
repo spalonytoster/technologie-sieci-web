@@ -1,0 +1,28 @@
+// out: ../css/zad_02.css, compress: true
+
+@menu-height: 20px;
+
+body {
+  margin: 0;
+}
+
+.borders(@top: grey, @right: grey, @bottom: grey, @left: grey, @width: 2px) {
+  border-top: solid @top @width;
+  border-right: solid @right @width;
+  border-bottom: solid @bottom @width;
+  border-left: solid @left @width;
+}
+
+#menu {
+  .borders(grey, grey, black, grey, 2px);
+  position: absolute;
+  height: @menu-height;
+  width: 99%;
+  text-align: center;
+  padding: 5px 0px 5px;
+}
+
+#tresc {
+  position: absolute;
+  top: @menu-height;
+}
