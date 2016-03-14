@@ -1,20 +1,21 @@
 // out: ../css/zad_07.css, compress: true
-* {
-  font-size: large;
-}
 
-.C * {
+.default {
   position: relative;
+  height: 20px;
+  width: 15px;
+  font-size: large;
+  display: inline;
+  left: 15px;
 }
 
-@bottom: 30px;
-
-div.A {
-  left: 40px;
-
-  .B {
-    left: 30px;
-    bottom: @bottom;
+.C {
+  .A {
+    .default;
+    top: 7px;
   }
-
+  .B {
+    .default;
+    bottom: 7px;
+  }
 }
