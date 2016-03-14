@@ -1,0 +1,50 @@
+// out: ../css/zad_02.css, compress: true
+
+html {
+  width: 100%;
+  height: 100%;
+
+  body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.generic-flexbox(@bg-col) {
+  background-color: @bg-col;
+}
+
+#all {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+
+  #menu {
+    .generic-flexbox(lighten(grey, 30%));
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    //justify-content: flex-start;
+    align-content: space-between;
+    flex: 0 0 300px;
+
+     p {
+       background-color: white;
+       width: 70%;
+       align-self: center;
+     }
+  }
+
+  #main {
+    .generic-flexbox(lighten(grey, 40%));
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+
+    h1, h2, p {
+
+    }
+  }
+}
