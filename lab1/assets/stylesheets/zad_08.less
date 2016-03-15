@@ -1,27 +1,31 @@
 // out: ../css/zad_08.css, compress: true
-* {
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+}
+
+.default {
+  position: relative;
   font-size: large;
+  display: inline;
+  left: 15px;
 }
 
 .C {
-
-  * {
-    position: relative;
-    height: 20px;
-    width: 15px;
-  }
+  border: solid red 2px;
+  background-color: #ffe8bd;
+  width: 312px;
+  height: 46px;
+  margin: 0 auto;
 
   .A {
-    left: 30px;
-
-    .B {
-      left: 30px;
-      bottom: 30px;
-
-      .A {
-        //left: 0px;
-      }
-    }
-
+    .default;
+    top: 7px;
+  }
+  .B {
+    .default;
+    bottom: 7px;
   }
 }

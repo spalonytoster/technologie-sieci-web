@@ -1,0 +1,33 @@
+// out: ../css/position_absolute_test.css, compress: true
+
+html, body {
+  margin: 0 auto;
+}
+
+.border(@color: black) {
+  border: solid @color 3px;
+}
+
+.container {
+  .border(blue);
+}
+
+.nav {
+  .border(pink);
+  position: absolute;
+  width: 206px;
+
+}
+
+.section {
+  .border(yellow);
+  margin-left: 212px;
+}
+
+.footer {
+  .border(green);
+  position: fixed;
+  bottom: 0;
+  line-height: 100px;
+  width: 100%;
+}
