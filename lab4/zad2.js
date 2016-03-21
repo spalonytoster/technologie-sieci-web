@@ -1,7 +1,8 @@
 /*jshint globalstrict: true, devel: true, esversion: 6 */
+'use strict';
 
 String.prototype.nbsp = function() {
-	return this.replace(/(\s[aiouwz])\s/g, function(match, p1, offset, string) {
+	return this.replace(/(\s[aiouwz])\s/g, function(p1) {
 		return p1 + '&nbsp;';
 	});
 };
