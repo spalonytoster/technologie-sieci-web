@@ -1,16 +1,23 @@
-/* jshint globalstrict: true, devel: true, esversion: 6, jquery: true */
-"use strict";
+/*jshint browser: true, esversion: 6 */
 
-var countDOMDepth = function () {
-  let count = 0;
-  let element = $("document");
-  while (element.hasChildNodes) {
-    element = element.first();
-    count++;
+domReady(function () {
+  var headers = document.getElementsByClassName('hd');
+  console.log("I've found " + headers.length + " headers");
+  console.log(headers);
+  var clickAction = function clickAction(event) {
+    var body = event.srcElement.nextElementSibling;
+    if (!body.attributes.hidden) {
+      body.style.display = "none";
+      body.attributes.hidden = true;
+    }
+    else {
+      body.style.display = "block";
+      body.attributes.hidden = false;
+    }
+  };
+  for (var i = 0; i < headers.length; i++) {
+    console.log("hello");
+    addEvent(headers[i], "click", clickAction);
   }
-  return count;
-};
-
-$("document").ready(function() {
-    alert(countDOMDepth());
+  var contents;
 });
