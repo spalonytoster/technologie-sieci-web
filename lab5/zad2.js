@@ -2,30 +2,36 @@
 
 domReady(function () {
   var clickAction = function clickAction(event) {
-    var body = event.srcElement.nextElementSibling;
-    if (body.attributes.active) {
-      body.style.display = "none";
-      body.attributes.active = false;
+    var nextSibling = event.srcElement.nextElementSibling;
+    if (nextSibling.attributes.active) {
+      nextSibling.style.display = "none";
+      nextSibling.attributes.active = false;
+      this.style["background-color"] = "blue";
     }
     else {
-      body.style.display = "block";
-      body.attributes.active = true;
+      nextSibling.style.display = "block";
+      nextSibling.attributes.active = true;
+      this.style["background-color"] = "rgba(23, 39, 247, 0.63)";
     }
   };
 
   var mouseoverAction = function clickAction(event) {
-    var body = this.nextElementSibling;
-    if (body.attributes.hidden) {
-      body.style.display = "block";
-      body.attributes.hidden = false;
+    var nextSibling = this.nextElementSibling;
+    if (nextSibling.attributes.hidden) {
+      if (!nextSibling.attributes.active) {
+        nextSibling.style.display = "block";
+        nextSibling.attributes.hidden = false;
+      }
     }
   };
 
   var mouseoutAction = function clickAction(event) {
-    var body = this.nextElementSibling;
-    if (!body.attributes.hidden) {
-      body.style.display = "none";
-      body.attributes.hidden = true;
+    var nextSibling = this.nextElementSibling;
+    if (!nextSibling.attributes.hidden) {
+      if (!nextSibling.attributes.active) {
+        nextSibling.style.display = "none";
+        nextSibling.attributes.hidden = true;
+      }
     }
   };
 
@@ -35,7 +41,10 @@ domReady(function () {
     headers[i].nextElementSibling.style.display = "none";
     headers[i].nextElementSibling.attributes.hidden = true;
     headers[i].nextElementSibling.attributes.active = false;
-    addEvent(headers[i], "click", clickAction);
+    headers[i].addEventListener("click", clickAction, false);
+    headers[i].addEventListener("mouseover", mouseoverAction, false);
+    headers[i].addEventListener("mouseout", mouseoutAction, false);
+    //addEvent(headers[i], "click", clickAction);
     // addEvent(headers[i], "mouseover", mouseoverAction);
     // addEvent(headers[i], "mouseout", mouseoutAction);
   }
