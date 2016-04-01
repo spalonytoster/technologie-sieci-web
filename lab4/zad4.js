@@ -12,16 +12,19 @@ var fib = function fib(arg) {
 };
 
 var memo = function (cache, fun) {
-    let n = fun.arguments;
-    return n;
+  return function fibWithCache(arg) {
+    if (arg < cache.length) {
+      console.log(cache[arg]);
+      return cache[arg];
+    }
+    else console.log(cache.push(fibWithCache(arg-1) + fibWithCache(arg-2)));
+  };
 };
 
-//memo.recur = fib;
+var fibonacci = memo([0, 1], function (recur, n) {
+    return recur(n - 1) + recur(n - 2);
+});
 
-var fibonacci = function (n) {
-  return memo([0, 1], function (recur, n) {
-      return recur(n - 1) + recur(n - 2);
-  });
-};
-
+console.log(fib(5));
+console.log(" === ");
 console.log(fibonacci(5));
