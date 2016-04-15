@@ -1,0 +1,22 @@
+{
+  "name": "technologie-sieci-web",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spalonytoster/technologie-sieci-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spalonytoster/technologie-sieci-web/issues"
+  },
+  "homepage": "https://github.com/spalonytoster/technologie-sieci-web#readme"
+}
