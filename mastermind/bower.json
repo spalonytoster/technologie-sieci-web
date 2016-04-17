@@ -13,6 +13,7 @@
   ],
   "dependencies": {
     "jquery": "2.1.x",
-    "components-font-awesome": "^4.5.0"
+    "components-font-awesome": "^4.5.0",
+    "skeleton": "^2.0.4"
   }
 }
