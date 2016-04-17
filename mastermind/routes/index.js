@@ -11,6 +11,7 @@ exports.index = function (req, res) {
 };
 
 exports.play = function (req, res) {
+    var returnObj = {};
     var newGame = function () {
         var i, data = [],
             puzzle = req.session.puzzle;
@@ -18,9 +19,8 @@ exports.play = function (req, res) {
             data.push(Math.floor(Math.random() * puzzle.dim));
         }
         req.session.puzzle.data = data;
-        return {
-            "retMsg": "coś o aktualnej koniguracji…"
-        };
+
+        returnObj.puzzle = puzzle;
     };
     // poniższa linijka jest zbędna (przy założeniu, że
     // play zawsze używany będzie po index) – w końcowym
@@ -34,7 +34,24 @@ exports.play = function (req, res) {
     if (req.params[2]) {
         req.session.puzzle.size = req.params[2];
     }
-    res.json(newGame());
+    if (req.params[4]) {
+        req.session.puzzle.dim = req.params[4];
+    }
+    if (req.params[6]) {
+        req.session.puzzle.max = req.params[6];
+    }
+
+    newGame();
+    res.render('_play', {
+        title: 'Mastermind',
+        size: req.session.puzzle.size,
+        dim: req.session.puzzle.dim,
+        max: req.session.puzzle.max
+    },
+    function (err, view) {
+      returnObj.view = view;
+    });
+    res.json(returnObj);
 };
 
 exports.mark = function (req, res) {
@@ -48,4 +65,8 @@ exports.mark = function (req, res) {
         };
     };
     res.json(markAnswer());
+};
+
+exports.gameOver = function (req, res) {
+    res.render('_game-over');
 };

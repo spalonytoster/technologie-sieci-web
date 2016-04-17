@@ -2,18 +2,17 @@
 
 var _ = require('underscore');
 
-var Z = [2, 1, 2, 3, 1];
-var K = [2, 2, 4, 1, 3];
+var Z = [1, 1, 2, 1, 2];
+var R = [3, 2, 2, 3, 3];
 
 var countOccurences = (array, limit) => {
-  var toRet = _.countBy(array, (num) => {
+  return _.countBy(array, (num) => {
     return num;
   });
-  return toRet;
 };
 
 var zCount = countOccurences(Z);
-var kCount = countOccurences(K);
+var rCount = countOccurences(R);
 
 console.log(zCount);
-console.log(kCount);
+console.log(rCount);

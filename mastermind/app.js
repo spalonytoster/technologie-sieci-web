@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieSession({secret: secret}));
 // „serwery statyczne”
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'bower_components/jquery/dist')));
+app.use(express.static(path.join(__dirname, 'bower_components')));
 
 if ('development' == env) {
     app.use(logger('dev'));
@@ -42,6 +42,7 @@ if ('development' == env) {
 app.get('/', routes.index);
 app.get(/^\/play\/((size\/(\d+)\/)?(dim\/(\d+)\/)?(max\/(\d+)\/)?)?/, routes.play);
 app.get(/^\/mark\/((?:\d+\/)+)$/, routes.mark);
+app.get(/^\/gameover/, routes.gameOver);
 
 // uruchamiamy aplikację
 app.listen(port, function () {

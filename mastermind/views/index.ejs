@@ -2,14 +2,43 @@
 <html>
   <head>
     <title><%= title %></title>
+    <link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href='/skeleton/css/normalize.css' media="screen" charset="utf-8">
+    <link rel="stylesheet" href='/skeleton/css/skeleton.css' media="screen" charset="utf-8">
     <link rel='stylesheet' href='/css/style.css' />
-    <script src='jquery.min.js'></script>
+    <script src='/jquery/dist/jquery.min.js'></script>
     <script src='/js/skrypt.js'></script>
   </head>
   <body>
-    <p>Welcome to <%= title %></p>
-    <p>
-      Interfejs użytkownika
-    </p>
+    <div class="flexbox">
+      <div id="main-content" class="container wrapper">
+        <h1 class="main-header">Welcome to <span class="app-title"><%= title %></span></h1>
+        <div class="row">
+          <div class="four columns">
+            <label for="sizeValue">Size</label>
+            <input type="text" class="u-full-width" id="sizeValue" />
+          </div>
+          <div class="four columns">
+            <label for="dimValue">Dimensions</label>
+            <input type="text" class="u-full-width" id="dimValue" />
+          </div>
+          <div class="four columns">
+            <label for="levelValue">Level</label>
+            <select class="u-full-width" id="levelValue">
+              <option value="0">Practice</option>
+              <option value="50">Easy</option>
+              <option value="30">Medium</option>
+              <option value="20">Hard</option>
+              <option value="10">Expert</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="offset-by-four four columns">
+            <input id="play-button" class="button-primary u-full-width" type="submit" value="Play">
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

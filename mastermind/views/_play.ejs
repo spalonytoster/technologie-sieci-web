@@ -1,0 +1,26 @@
+<h1 class="main-header">Here is your <span class="app-title"><%= title %></span></h1>
+<div class="row">
+  <div class="eight columns">
+    <label>Your answer</label>
+    <% for(var i = 0; i < size; i++) { %>
+      <div class="one column">
+        <input type="text" class="u-full-width answer-input" id="number<%=i%>"/>
+      </div>
+    <% } %>
+  </div>
+  <div class="four columns">
+    <label for="sizeValue">Tries left</label>
+    <div id="tries-left">
+      <% if (max !== "0") { %>
+        <%= max %>
+      <% } else { %>
+        No limit
+      <% } %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="offset-by-four four columns">
+    <input id="guess-button" class="button-primary u-full-width" type="submit" value="Take a guess!">
+  </div>
+</div>
