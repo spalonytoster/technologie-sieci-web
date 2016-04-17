@@ -1,4 +1,5 @@
-/*jshint jquery: true, devel: true, esversion: 6 */
+/*jshint jquery: true, devel: true, esversion: 6, browser: true */
+"use strict";
 
 $(function () {
     $('#play-button').click((event) => {
@@ -13,11 +14,28 @@ $(function () {
         dim = 9;
       }
 
-      var url = "/play/size/" + size + "/dim/" + dim + "/max/" + max + "/";
+      var playUrl = "/play/size/" + size + "/dim/" + dim + "/max/" + max + "/";
 
-      $.get(url, (data) => {
+      $.get(playUrl, (data) => {
         $("#main-content").html(data.view);
         $("#guess-button").click((event) => {
+          var markUrl = "/mark/";
+          $(".answer-input").val((index, value) => {
+            if (!value) {
+              value = 0;
+            }
+            markUrl += value + "/";
+          });
+          $.get(markUrl, (data) => {
+            var $marks = "";
+            for (let i = 0; i < data.black; i++) {
+              $marks += "<div class=\"one column\"><i class=\"fa fa-circle mark-dot\"></i></div>";
+            }
+            for (let i = 0; i < data.white; i++) {
+              $marks += "<div class=\"one column\"><i class=\"fa fa-circle-o mark-dot\"></i></div>";
+            }
+            $("#marks").html($marks);
+          });
           $("#tries-left").text((index, text) => {
             if (text.trim() === "No limit") {
               return text;

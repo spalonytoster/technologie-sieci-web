@@ -60,8 +60,8 @@ exports.mark = function (req, res) {
         move = move.slice(0, move.length - 1);
         console.log(move);
         return {
-            "retVal": "tutaj – zamiast tego napisu – ocena",
-            "retMsg": "coś o ocenie – np „Brawo” albo „Buuu”"
+            black: 1,
+            white: 2
         };
     };
     res.json(markAnswer());
