@@ -1,18 +1,14 @@
 /* jshint node: true, esversion: 6 */
-
 var _ = require('underscore');
 
-var Z = [1, 1, 2, 1, 2];
-var R = [3, 2, 2, 3, 3];
+exports.getMarks = function getMarks(Z, R) {
+  var zCount = _.countBy(Z, (num) => num),
+      rCount = _.countBy(R, (num) => num),
+      black, white, toRet = {};
 
-var countOccurences = (array, limit) => {
-  return _.countBy(array, (num) => {
-    return num;
-  });
+      black = _.size(_.filter(_.zip(Z, R), (array) => (array[0] === Number(array[1]))));
+      white = _.reduce(_.mapObject(_.pick(zCount, _.keys(rCount)), (val, key) => (val <= rCount[key] ? val : rCount[key])), (memo, num) => memo + num, 0) - black;
+      toRet.black = black;
+      toRet.white = white;
+      return toRet;
 };
-
-var zCount = countOccurences(Z);
-var rCount = countOccurences(R);
-
-console.log(zCount);
-console.log(rCount);

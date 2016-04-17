@@ -1,7 +1,8 @@
 /*jshint node: true */
 // poniżej użylismy krótszej (niż na wykładzie) formy
 // module.exports ==> exports
-var _ = require('underscore');
+var _ = require('underscore'),
+    getMarks = require('../logic').getMarks;
 
 exports.index = function (req, res) {
     req.session.puzzle = req.session.puzzle || req.app.get('puzzle');
@@ -58,11 +59,9 @@ exports.mark = function (req, res) {
     var markAnswer = function () {
         var move = req.params[0].split('/');
         move = move.slice(0, move.length - 1);
+        console.log(req.session.puzzle.data);
         console.log(move);
-        return {
-            black: 1,
-            white: 2
-        };
+        return getMarks(req.session.puzzle.data, move);
     };
     res.json(markAnswer());
 };
