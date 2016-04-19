@@ -1,0 +1,25 @@
+{
+  "name": "socketio-chat",
+  "description": "Chat app using socket.io",
+  "main": "public/index.html",
+  "authors": [
+    "Maciej Posłuszny <xmachiei@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/spalonytoster/technologie-sieci-web",
+  "moduleType": [
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "skeleton": "^2.0.4",
+    "sweetalert": "^1.1.3"
+  }
+}

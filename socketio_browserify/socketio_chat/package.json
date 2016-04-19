@@ -1,7 +1,7 @@
 {
-  "name": "SioApp01",
+  "name": "socketio-chat",
   "version": "0.1.0",
-  "description": "Pierwszy przykład z Socket.io",
+  "description": "Chat app using socket.io",
   "scripts": {
     "start": "nodemon app.js"
   },
