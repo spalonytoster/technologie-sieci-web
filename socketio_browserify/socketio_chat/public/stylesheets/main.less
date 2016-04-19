@@ -1,0 +1,53 @@
+// out: ./main.min.css, compress: true
+
+.make100percent {
+  width: 100%;
+  height: 100%;
+}
+
+@channel-padding: 12px;
+@channel-border-size: 2px;
+
+html {
+  .make100percent;
+  body {
+    margin: 0;
+    .make100percent;
+  }
+}
+
+.flexbox {
+  .make100percent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .title {
+    text-align: center;
+  }
+
+  #username {
+    font-weight: bold;
+    font-style: italic;
+  }
+
+  #channel-list {
+    list-style-type: none;
+
+    li.channel {
+      margin: 0 auto;
+      padding: @channel-padding;
+      cursor: default;
+
+      &:nth-child(odd) {
+        background-color: lighten(gray, 20%);
+      }
+    }
+
+    li.channel-selected {
+      border: solid @channel-border-size gray;
+      padding: (@channel-padding)-(@channel-border-size);
+    }
+  }
+}
