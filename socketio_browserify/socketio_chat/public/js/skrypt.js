@@ -20,7 +20,7 @@ $(function () {
 	  type: "input",
 	  showCancelButton: false,
 	  closeOnConfirm: true,
-	  animation: "slide-from-top",
+		allowEscapeKey: false,
 	  inputPlaceholder: "Cool guy #54365"
 	}, function(inputValue) {
 	  if (inputValue === false) return false;
@@ -54,8 +54,7 @@ $(function () {
 		  type: "input",
 		  showCancelButton: false,
 		  closeOnConfirm: true,
-		  animation: "slide-from-top",
-		  inputPlaceholder: "Cool guy #54365"
+		  inputPlaceholder: "Eg. \"Awesome nerd channel\""
 		}, function(inputValue) {
 		  if (inputValue === false) return false;
 		  if (inputValue === "") {

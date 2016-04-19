@@ -14,7 +14,9 @@ app.use(serveStatic("bower_components/sweetalert/dist"));
 // io.set('heartbeat timeout', 10);
 // io.set('heartbeat interval', 10);
 
-var chat = io
+var channels = {};
+
+  channels.chat = io
     .of('/chat')
     .on('connection', function (socket) {
     	console.log('Uruchomiłem kanał "/chat"');
@@ -24,13 +26,13 @@ var chat = io
         });
     });
 
-var news = io
+  channels.news = io
     .of('/news')
     .on('connection', function (socket) {
         console.log('Uruchomiłem kanał "/news"');
         socket.on('message', function (data) {
             console.log('/news: ' + data);
-        	socket.emit('message', '/news: ' + data);
+        	channels.news.emit('message', '/news: ' + data);
         });
     });
 
