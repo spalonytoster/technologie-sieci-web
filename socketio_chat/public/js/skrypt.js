@@ -44,6 +44,7 @@ $(function () {
 			activeChannel.disconnect();
 			activeChannel = null;
 		}
+
 		activeChannel = io('http://' + location.host + '/' + channel.id);
 		activeChannel.channelInfo = channel;
 		activeChannel.on('connect', function () {
@@ -55,11 +56,24 @@ $(function () {
 		activeChannel.on('message', function (data) {
 			console.log(data);
 		});
+
+		$('#messages-list').html('');
+		if (channels[activeChannel.channelInfo.id].history.length > 0) {
+			_.forEach(channels[activeChannel.channelInfo.id].history, function (message) {
+				if (message.from == "Me") {
+					$('#messages-list').append(doT.template($('#my-message').text())(message));
+				}
+				else {
+					$('#messages-list').append(doT.template($('#their-message').text())(message));
+				}
+			});
+		}
 	};
 
 	var addChannelToList = function addChannelToList(channel) {
 		$('#channel-list').append(doT.template($('#channel-list-item').text())(channel));
 		channels[channel.id] = channel;
+		channels[channel.id].history = [];
 		$('#' + channel.id).click(function () {
 			if (selectedChannel) {
 				$(selectedChannel).removeClass("channel-selected");
@@ -124,12 +138,14 @@ $(function () {
 
 	var sendMessage = function sendMessage(event) {
 		var body = $('#send-message-input').val();
-		activeChannel.emit('message', body);
-		// channels[activeChannel.channelInfo.id];
-		$('#messages-list').append(doT.template($('#my-message').text())({
+		var message = {
+			from: "Me",
 			body: body,
 			time: moment().calendar()
-		}));
+		};
+		activeChannel.emit('message', body);
+		channels[activeChannel.channelInfo.id].history.push(message);
+		$('#messages-list').append(doT.template($('#my-message').text())(message));
 		$('#send-message-input').val('');
 		$("#messages-list").animate({ scrollTop: $('#messages-list').prop("scrollHeight")}, 600);
 		event.preventDefault();

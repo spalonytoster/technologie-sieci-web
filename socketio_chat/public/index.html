@@ -117,6 +117,14 @@
     </li>
   </script>
 
+  <script id="their-message" type="text/x-dot-template">
+    <li class="message-item my-message">
+      <span class="sender">{{=it.from}}</span>
+      <span class="message">{{=it.body}}</span>
+      <span class="u-pull-right">{{=it.time}}</span>
+    </li>
+  </script>
+
   <script id="channelListItem" type="text/x-dot-template">
     <li class="message-item their-message">
       <span class="sender">{{=it.from}}</span>
