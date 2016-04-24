@@ -59,28 +59,30 @@
               <li class="message-item my-message">
                 <span class="sender">Me</span>
                 <span class="message">Wassup?</span>
-                <span class="u-pull-right">Today at 12:07</span>
+                <span class="u-pull-right">Today at 12:07 AM</span>
               </li>
               <li class="message-item my-message">
                 <span class="sender">Me</span>
                 <span class="message">My name is Mac btw?</span>
-                <span class="u-pull-right">Today at 12:07</span>
+                <span class="u-pull-right">Today at 12:07 AM</span>
               </li>
               <li class="message-item their-message">
                 <span class="sender">Abott2353</span>
                 <span class="message">Wassup? My name's Tedd</span>
-                <span class="u-pull-right">Today at 12:07</span>
+                <span class="u-pull-right">Today at 12:07 AM</span>
               </li>
               <li class="message-item my-message">
                 <span class="sender">Me</span>
                 <span class="message">Nice to meet you :)</span>
-                <span class="u-pull-right">Today at 12:07</span>
+                <span class="u-pull-right">Today at 12:07 AM</span>
               </li>
             </ul>
           </div>
           <div class="row">
             <div class="ten columns">
-              <input type="text" class="u-full-width" id="send-message-input" placeholder="Hello beautiful, how are you today?" />
+              <form id="send-message-form">
+                <input type="text" class="u-full-width" id="send-message-input" placeholder="Type your message here" />
+              </form>
             </div>
             <div class="two columns">
               <button id="send-message-button" class="button-primary" type="button" name="button">Send</button>
@@ -100,9 +102,11 @@
   <script src="sweetalert.min.js"></script>
   <script src="jquery.min.js"></script>
   <script src="doT.js"></script>
+  <script src="lodash.js"></script>
+  <script src="moment.js"></script>
 
   <script id="channel-list-item" type="text/x-dot-template">
-    <li id="{{=it.id}}" class="channel">{{=it.name}}</li>
+    <li id="{{=it.id}}" class="channel">{{=it.name}}<span class="status u-pull-right"></span></li>
   </script>
 
   <script id="my-message" type="text/x-dot-template">

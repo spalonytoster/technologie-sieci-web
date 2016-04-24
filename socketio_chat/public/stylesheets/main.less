@@ -54,6 +54,10 @@ html {
       &:nth-child(odd) {
         background-color: lighten(gray, 20%);
       }
+
+      .status {
+        color: green;
+      }
     }
 
     li.channel-selected {
@@ -64,12 +68,12 @@ html {
 
   #chat-window {
     margin-top: 20px;
-    min-height: 200px;
-    max-height: 500px;
-    overflow: auto;
 
     ul#messages-list {
+      min-height: 200px;
+      max-height: 500px;
       list-style-type: none;
+      overflow: auto;
 
       li.message-item {
         margin: 0 auto;

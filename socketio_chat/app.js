@@ -18,7 +18,9 @@ app.use(serveStatic("bower_components/skeleton"));
 app.use(serveStatic("bower_components/jquery/dist"));
 app.use(serveStatic("bower_components/sweetalert/dist"));
 app.use(serveStatic("bower_components/animate.css"));
+app.use(serveStatic("bower_components/moment"));
 app.use(serveStatic("node_modules/dot"));
+app.use(serveStatic("node_modules/lodash"));
 app.use(bodyParser.json());
 // io.set('heartbeat timeout', 10);
 // io.set('heartbeat interval', 10);
@@ -26,14 +28,15 @@ app.use(bodyParser.json());
 var channels = {};
 
 app.post('/channels/', function (req, res) {
-  let toRet = [];
+  let toRet = {};
   _.forEach(channels, function (value, key) {
-    toRet.push({
-      name: value.name,
-      id: value.id
-    });
+    toRet[key] = {
+      id: value.id,
+      name: value.name
+    };
   });
-  res.json({channels: toRet});
+  res.setHeader('Content-Type', 'application/json');
+  res.json(toRet);
 });
 app.post('/channel/new/', function (req, res) {
   let name = req.body.name;
@@ -58,12 +61,12 @@ channels.general = {
   name: "General",
   id: "general",
   channel: io
-    .of('/chat')
+    .of('/general')
     .on('connection', function (socket) {
-    	console.log('Uruchomiłem kanał "/chat"');
+    	console.log('Otrzymano połączenie do kanału "/general"');
         socket.on('message', function (data) {
-            console.log('/chat: ' + data);
-            channels.general.emit('message', '/chat: ' + data);
+            console.log('/general: ' + data);
+            channels.general.emit('message', '/general: ' + data);
         });
     })
 };
@@ -74,7 +77,7 @@ channels.news = {
   channel: io
     .of('/news')
     .on('connection', function (socket) {
-        console.log('Uruchomiłem kanał "/news"');
+        console.log('Otrzymano połączenie do kanału "/news"');
         socket.on('message', function (data) {
             console.log('/news: ' + data);
         	channels.news.emit('message', '/news: ' + data);
