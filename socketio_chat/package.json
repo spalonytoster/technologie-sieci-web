@@ -1,0 +1,18 @@
+{
+  "name": "socketio-chat",
+  "version": "0.1.0",
+  "description": "Chat app using socket.io",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "connect": "^3.4.1",
+    "dot": "^1.0.3",
+    "express": "^4.13.4",
+    "lodash": "^4.11.1",
+    "serve-static": "^1.10.2",
+    "socket.io": "^1.4.5",
+    "underscore.string": "^3.3.4"
+  }
+}
