@@ -17,6 +17,7 @@ app.use(serveStatic("public"));
 app.use(serveStatic("bower_components/skeleton"));
 app.use(serveStatic("bower_components/jquery/dist"));
 app.use(serveStatic("bower_components/sweetalert/dist"));
+app.use(serveStatic("bower_components/animate.css"));
 app.use(serveStatic("node_modules/dot"));
 app.use(bodyParser.json());
 // io.set('heartbeat timeout', 10);
@@ -50,7 +51,7 @@ app.post('/channel/new/', function (req, res) {
           });
       })
   };
-    res.sendStatus(200);
+  res.json({name: name, id: id});
 });
 
 channels.general = {

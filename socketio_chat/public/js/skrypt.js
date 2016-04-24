@@ -10,32 +10,56 @@
 		var username,
 				selectedChannel,
 				activeChannel,
-				channels = [];
+				channels = [],
+				history = [];
 
 		var createNewChannel = function createNewChannel(name) {
-			$.post("/channel/new", {name: name}, function(data) {
-			  activeChannel = io('http://' + location.host + '/' + name);
+			// $.post("/channel/new/", {name: name}, function(data) {
+			// 	console.log('Channel "%s" has been created with id: "%s"', data.name, data.id);
+			//   activeChannel = io('http://' + location.host + '/' + name);
+			// 	activeChannel.on('connect', function () {
+			// 	  console.log('Nawiązano połączenie z kanałem "/"' + name);
+			// 	});
+			// 	activeChannel.on('disconnect', function () {
+			// 		// TODO
+			// 	});
+			// 	activeChannel.on('message', function (data) {
+			// 		// TODO
+			// 	});
+			// }, "json");
+			$.ajax({
+			  url: "/channel/new/",
+			  type:"POST",
+			  data: JSON.stringify({name: name}),
+			  contentType:"application/json; charset=utf-8",
+			  dataType:"json",
+			  success: function(data) {
+					console.log('Channel "%s" has been created with id: "%s"', data.name, data.id);
+					addChannelToList(data);
+				  activeChannel = io('http://' + location.host + '/' + name);
 
-				activeChannel.on('connect', function () {
-				  console.log('Nawiązano połączenie z kanałem "/" + name');
-				});
-				activeChannel.on('disconnect', function () {
-					// TODO
-				});
-				activeChannel.on('message', function (data) {
-					// TODO
-				});
+					activeChannel.on('connect', function () {
+					  console.log('Nawiązano połączenie z kanałem "/%s"', name);
+					});
+					activeChannel.on('disconnect', function () {
+						// TODO
+					});
+					activeChannel.on('message', function (data) {
+						// TODO
+					});
+				}
 			});
 		};
 
 		var addChannelToList = function (channel) {
-			$('#channel-list').append(doT.template($('#channelListItem').text())(channel));
+			$('#channel-list').append(doT.template($('#channel-list-item').text())(channel));
 			$('#' + channel.id).click(function () {
 				if (selectedChannel) {
 					$(selectedChannel).removeClass("channel-selected");
 				}
 				selectedChannel = this;
 				$(this).toggleClass("channel-selected");
+				console.log($(selectedChannel).text());
 			});
 		};
 

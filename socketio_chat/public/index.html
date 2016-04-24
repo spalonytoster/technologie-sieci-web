@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="css/normalize.css">
   <link rel="stylesheet" href="css/skeleton.css">
   <link rel="stylesheet" href="sweetalert.css">
+  <link rel="stylesheet" href="animate.min.css">
   <link rel="stylesheet" href="stylesheets/main.min.css">
 
   <!-- Favicon
@@ -51,6 +52,42 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div id="chat-window">
+          <div class="row">
+            <ul id="messages-list">
+              <li class="message-item my-message">
+                <span class="sender">Me</span>
+                <span class="message">Wassup?</span>
+                <span class="u-pull-right">Today at 12:07</span>
+              </li>
+              <li class="message-item my-message">
+                <span class="sender">Me</span>
+                <span class="message">My name is Mac btw?</span>
+                <span class="u-pull-right">Today at 12:07</span>
+              </li>
+              <li class="message-item their-message">
+                <span class="sender">Abott2353</span>
+                <span class="message">Wassup? My name's Tedd</span>
+                <span class="u-pull-right">Today at 12:07</span>
+              </li>
+              <li class="message-item my-message">
+                <span class="sender">Me</span>
+                <span class="message">Nice to meet you :)</span>
+                <span class="u-pull-right">Today at 12:07</span>
+              </li>
+            </ul>
+          </div>
+          <div class="row">
+            <div class="ten columns">
+              <input type="text" class="u-full-width" id="send-message-input" placeholder="Hello beautiful, how are you today?" />
+            </div>
+            <div class="two columns">
+              <button id="send-message-button" class="button-primary" type="button" name="button">Send</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -64,8 +101,24 @@
   <script src="jquery.min.js"></script>
   <script src="doT.js"></script>
 
-  <script id="channelListItem" type="text/x-dot-template">
+  <script id="channel-list-item" type="text/x-dot-template">
     <li id="{{=it.id}}" class="channel">{{=it.name}}</li>
+  </script>
+
+  <script id="my-message" type="text/x-dot-template">
+    <li class="message-item my-message">
+      <span class="sender">Me</span>
+      <span class="message">{{=it.body}}</span>
+      <span class="u-pull-right">{{=it.time}}</span>
+    </li>
+  </script>
+
+  <script id="channelListItem" type="text/x-dot-template">
+    <li class="message-item their-message">
+      <span class="sender">{{=it.from}}</span>
+      <span class="message">{{=it.body}}</span>
+      <span class="u-pull-right">{{=it.time}}</span>
+    </li>
   </script>
 
   <script src="js/skrypt.js"></script>
