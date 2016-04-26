@@ -2,7 +2,7 @@
 
 Instalacja zależności:
 
-    npm install
+    npm install && bower install
 
 Uruchomienie serwera:
 
