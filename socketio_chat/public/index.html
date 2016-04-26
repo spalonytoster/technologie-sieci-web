@@ -52,41 +52,39 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div id="chat-window">
-          <div class="row">
-            <ul id="messages-list">
-              <li class="message-item my-message">
-                <span class="sender">Me</span>
-                <span class="message">Wassup?</span>
-                <span class="u-pull-right">Today at 12:07 AM</span>
-              </li>
-              <li class="message-item my-message">
-                <span class="sender">Me</span>
-                <span class="message">My name is Mac btw?</span>
-                <span class="u-pull-right">Today at 12:07 AM</span>
-              </li>
-              <li class="message-item their-message">
-                <span class="sender">Abott2353</span>
-                <span class="message">Wassup? My name's Tedd</span>
-                <span class="u-pull-right">Today at 12:07 AM</span>
-              </li>
-              <li class="message-item my-message">
-                <span class="sender">Me</span>
-                <span class="message">Nice to meet you :)</span>
-                <span class="u-pull-right">Today at 12:07 AM</span>
-              </li>
-            </ul>
+      <div id="chat-window">
+        <div class="row">
+          <ul id="messages-list">
+            <li class="message-item my-message">
+              <span class="sender">Me</span>
+              <span class="message">Wassup?</span>
+              <span class="u-pull-right">Today at 12:07 AM</span>
+            </li>
+            <li class="message-item my-message">
+              <span class="sender">Me</span>
+              <span class="message">My name is Mac btw?</span>
+              <span class="u-pull-right">Today at 12:07 AM</span>
+            </li>
+            <li class="message-item their-message">
+              <span class="sender">Abott2353</span>
+              <span class="message">Wassup? My name's Tedd</span>
+              <span class="u-pull-right">Today at 12:07 AM</span>
+            </li>
+            <li class="message-item my-message">
+              <span class="sender">Me</span>
+              <span class="message">Nice to meet you :)</span>
+              <span class="u-pull-right">Today at 12:07 AM</span>
+            </li>
+          </ul>
+        </div>
+        <div class="row">
+          <div class="ten columns">
+            <form id="send-message-form">
+              <input type="text" class="u-full-width" id="send-message-input" autocomplete="off" placeholder="Type your message here" />
+            </form>
           </div>
-          <div class="row">
-            <div class="ten columns">
-              <form id="send-message-form">
-                <input type="text" class="u-full-width" id="send-message-input" placeholder="Type your message here" />
-              </form>
-            </div>
-            <div class="two columns">
-              <button id="send-message-button" class="button-primary" type="button" name="button">Send</button>
-            </div>
+          <div class="two columns">
+            <button id="send-message-button" class="button-primary" type="button" name="button">Send</button>
           </div>
         </div>
       </div>
@@ -103,7 +101,8 @@
   <script src="jquery.min.js"></script>
   <script src="doT.js"></script>
   <script src="lodash.js"></script>
-  <script src="moment.js"></script>
+  <script src="/min/moment.min.js"></script>
+  <script src="jquery.noty.packaged.min.js"></script>
 
   <script id="channel-list-item" type="text/x-dot-template">
     <li id="{{=it.id}}" class="channel">{{=it.name}}<span class="status u-pull-right"></span></li>
@@ -118,7 +117,7 @@
   </script>
 
   <script id="their-message" type="text/x-dot-template">
-    <li class="message-item my-message">
+    <li class="message-item their-message">
       <span class="sender">{{=it.from}}</span>
       <span class="message">{{=it.body}}</span>
       <span class="u-pull-right">{{=it.time}}</span>

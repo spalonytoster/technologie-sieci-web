@@ -1,15 +1,48 @@
 /* jshint browser: true, globalstrict: true, devel: true, jquery: true */
 /* global io: false */
-/* globals swal, doT, _ , moment*/
+/* globals swal, doT, _ , moment, noty */
 "use strict";
 // Inicjalizacja UI
 
-var username,
-		selectedChannel,
-		activeChannel,
-		channels = {};
 $(function () {
 
+	var username,
+	selectedChannel,
+	activeChannel,
+	channels = {},
+	systemChannel;
+
+	var initSystemChannel = function initSystemChannel() {
+		systemChannel = io('http://' + location.host + '/system');
+
+		systemChannel.on('connect', function () {
+			console.log('connected to /system hidden channel');
+		});
+
+		systemChannel.on('system-message', function (systemMessage) {
+			var presence, body;
+			console.log(systemMessage);
+			if (systemMessage.channelPresence) {
+				presence = systemMessage.channelPresence;
+				body = presence.createdBy +
+			 				 ' created channel "' + presence.name + '".';
+			}
+			if (systemMessage.userPresence) {
+				// TODO
+			}
+			noty({
+				layout: 'topCenter',
+				theme: 'relax',
+				type: 'information',
+				timeout: true,
+				text: body,
+				animation: {
+					open: 'animated flipInX', // Animate.css class names
+					close: 'animated flipOutX', // Animate.css class names
+				}
+			});
+		});
+	};
 
 	var createNewChannel = function createNewChannel(name) {
 		// $.post("/channel/new/", {name: name}, function(data) {
@@ -44,17 +77,25 @@ $(function () {
 			activeChannel.disconnect();
 			activeChannel = null;
 		}
-
 		activeChannel = io('http://' + location.host + '/' + channel.id);
 		activeChannel.channelInfo = channel;
+
 		activeChannel.on('connect', function () {
 			console.log('Nawiązano połączenie z kanałem "/%s"', channel.id);
 		});
+
 		activeChannel.on('disconnect', function () {
 			console.log('Rozłączono z kanałem "/%s"', channel.id);
 		});
-		activeChannel.on('message', function (data) {
-			console.log(data);
+
+		activeChannel.on('message', function (message) {
+			if (message.from === username) {
+				return;
+			}
+			console.log(message);
+			channels[activeChannel.channelInfo.id].history.push(message);
+			$('#messages-list').append(doT.template($('#their-message').text())(message));
+			$("#messages-list").animate({ scrollTop: $('#messages-list').prop("scrollHeight")}, 300);
 		});
 
 		$('#messages-list').html('');
@@ -83,36 +124,33 @@ $(function () {
 		});
 	};
 
-	var updateChannels = function updateChannels() {
-		$.post("/channels", function (data) {
-			channels = data;
-			_.forEach(channels, function (channel) {
-				addChannelToList(channel);
-			});
-		});
+	var sendMessage = function sendMessage(event) {
+		var body = $('#send-message-input').val();
+		if (body === '') {
+			return false;
+		}
+		var message = {
+			from: username,
+			body: body,
+			time: moment().calendar()
+		};
+		activeChannel.emit('message', message);
+		channels[activeChannel.channelInfo.id].history.push(message);
+		$('#messages-list').append(doT.template($('#my-message').text())(message));
+		$("#messages-list").animate({ scrollTop: $('#messages-list').prop("scrollHeight")}, 300);
+		$('#send-message-input').val('');
+		return false; //same as event.preventDefault();
 	};
 
-	updateChannels();
-
-	swal({
-	  title: "Hello there!",
-	  text: "Pick a nickname buddy :)",
-	  type: "input",
-	  showCancelButton: false,
-	  closeOnConfirm: true,
-		allowEscapeKey: false,
-	  inputPlaceholder: "Cool guy #54365"
-	}, function(inputValue) {
-	  if (inputValue === false) return false;
-	  if (inputValue === "") {
-	    swal.showInputError("You need to write something!");
-	    return false;
-	  }
-		username = inputValue;
-		$("#username").text(username);
-	});
-
 	$("#join-button").click(function () {
+		if (!selectedChannel) {
+			swal("Oops...", "You need to select a channel first!", "error");
+			return false;
+		}
+		if (!activeChannel) {
+			$('#chat-window').css('display', 'block');
+			$('#chat-window').addClass('animated fadeInUp');
+		}
 		var channelId = $(selectedChannel).attr("id");
 		connectToChannel(channels[channelId]);
 		$('#' + channelId + ' .status').text('Connected');
@@ -120,37 +158,53 @@ $(function () {
 
 	$("#create-button").click(function () {
 		swal({
-		  title: "Create channel",
-		  text: "Enter channel name:",
-		  type: "input",
-		  showCancelButton: false,
-		  closeOnConfirm: true,
-		  inputPlaceholder: "Eg. \"Awesome nerd channel\""
+			title: "Create channel",
+			text: "Enter channel name:",
+			type: "input",
+			showCancelButton: false,
+			closeOnConfirm: true,
+			inputPlaceholder: "Eg. \"Awesome nerd channel\""
 		}, function(inputValue) {
-		  if (inputValue === false) return false;
-		  if (inputValue === "") {
-		    swal.showInputError("You need to write something!");
-		    return false;
-		  }
+			if (inputValue === false) return false;
+			if (inputValue === "") {
+				swal.showInputError("You need to write something!");
+				return false;
+			}
 			createNewChannel(inputValue);
 		});
 	});
 
-	var sendMessage = function sendMessage(event) {
-		var body = $('#send-message-input').val();
-		var message = {
-			from: "Me",
-			body: body,
-			time: moment().calendar()
-		};
-		activeChannel.emit('message', body);
-		channels[activeChannel.channelInfo.id].history.push(message);
-		$('#messages-list').append(doT.template($('#my-message').text())(message));
-		$('#send-message-input').val('');
-		$("#messages-list").animate({ scrollTop: $('#messages-list').prop("scrollHeight")}, 600);
-		event.preventDefault();
-	};
 	$('#send-message-form').submit(sendMessage);
 	$('#send-message-button').click(sendMessage);
+
+	(function registerUsername() {
+		swal({
+			title: "Hello there!",
+			text: "Pick a nickname buddy :)",
+			type: "input",
+			showCancelButton: false,
+			closeOnConfirm: true,
+			allowEscapeKey: false,
+			inputPlaceholder: "Cool guy #54365"
+		}, function(inputValue) {
+			if (inputValue === false) return false;
+			if (inputValue === "") {
+				swal.showInputError("You need to write something!");
+				return false;
+			}
+			username = inputValue;
+			$("#username").text(username);
+			initSystemChannel();
+		});
+	})();
+
+	(function updateChannels() {
+		$.post("/channels", function (data) {
+			channels = data;
+			_.forEach(channels, function (channel) {
+				addChannelToList(channel);
+			});
+		});
+	})();
 
 });

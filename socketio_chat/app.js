@@ -19,13 +19,15 @@ app.use(serveStatic("bower_components/jquery/dist"));
 app.use(serveStatic("bower_components/sweetalert/dist"));
 app.use(serveStatic("bower_components/animate.css"));
 app.use(serveStatic("bower_components/moment"));
+app.use(serveStatic("bower_components/noty/js/noty/packaged"));
 app.use(serveStatic("node_modules/dot"));
 app.use(serveStatic("node_modules/lodash"));
 app.use(bodyParser.json());
 // io.set('heartbeat timeout', 10);
 // io.set('heartbeat interval', 10);
 
-var channels = {};
+var channels = {},
+    systemChannel;
 
 app.post('/channels/', function (req, res) {
   let toRet = {};
@@ -49,11 +51,19 @@ app.post('/channel/new/', function (req, res) {
       .on('connection', function (socket) {
         console.log('Uruchomiłem kanał "/' + id + '"');
           socket.on('message', function (data) {
-              console.log('/' + id + ': ' + data);
+              console.log('/' + id + ':\n' + JSON.stringify(data, null, 2));
               channels[id].emit('message', '/' + id + ': ' + data);
           });
       })
   };
+  systemChannel.emit('system-message', {
+    channelPresence: {
+      created: true,
+      name: name,
+      id: id,
+      createdBy: "TODO"
+    }
+  });
   res.json({name: name, id: id});
 });
 
@@ -65,8 +75,8 @@ channels.general = {
     .on('connection', function (socket) {
     	console.log('Otrzymano połączenie do kanału "/general"');
         socket.on('message', function (data) {
-            console.log('/general: ' + data);
-            channels.general.emit('message', '/general: ' + data);
+            console.log('/general:\n' + JSON.stringify(data, null, 2));
+            channels.general.channel.emit('message', data);
         });
     })
 };
@@ -79,11 +89,21 @@ channels.news = {
     .on('connection', function (socket) {
         console.log('Otrzymano połączenie do kanału "/news"');
         socket.on('message', function (data) {
-            console.log('/news: ' + data);
-        	channels.news.emit('message', '/news: ' + data);
+          console.log('/news:\n' + JSON.stringify(data, null, 2));
+        	channels.news.channel.emit('message', data);
         });
     })
 };
+
+systemChannel = io
+  .of('/system')
+  .on('connection', function (socket) {
+      console.log('someone has connected');
+      socket.on('system-message', function (data) {
+        console.log('/news:\n' + JSON.stringify(data, null, 2));
+        systemChannel.emit('system-message', data);
+      });
+  });
 
 httpServer.listen(3000, function () {
     console.log('Serwer HTTP działa na pocie 3000');
