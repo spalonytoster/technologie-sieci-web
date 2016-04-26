@@ -22,7 +22,7 @@ html, body {
 }
 
 .flexbox {
-  .make100percent;
+  // .make100percent;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -39,6 +39,8 @@ html, body {
 
   ul#channel-list {
     list-style-type: none;
+    overflow: auto;
+    max-height: 500px;
 
     li.channel {
       margin: 0 auto;
