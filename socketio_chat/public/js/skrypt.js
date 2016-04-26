@@ -20,12 +20,17 @@ $(function () {
 		});
 
 		systemChannel.on('system-message', function (systemMessage) {
-			var presence, body;
+			var presence, body, channel;
 			console.log(systemMessage);
 			if (systemMessage.channelPresence) {
 				presence = systemMessage.channelPresence;
 				body = presence.createdBy +
 			 				 ' created channel "' + presence.name + '".';
+				channel = {
+					id: presence.id,
+					name: presence.name
+				};
+				addChannelToList(channel);
 			}
 			if (systemMessage.userPresence) {
 				// TODO
@@ -66,7 +71,7 @@ $(function () {
 		  dataType:"json",
 		  success: function(data) {
 				console.log('Channel "%s" has been created with id: "%s"', data.name, data.id);
-				addChannelToList(data);
+				return data;
 			}
 		});
 	};
@@ -157,6 +162,7 @@ $(function () {
 	});
 
 	$("#create-button").click(function () {
+		var channel;
 		swal({
 			title: "Create channel",
 			text: "Enter channel name:",
@@ -170,7 +176,7 @@ $(function () {
 				swal.showInputError("You need to write something!");
 				return false;
 			}
-			createNewChannel(inputValue);
+			channel = createNewChannel(inputValue);
 		});
 	});
 

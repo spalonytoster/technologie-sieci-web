@@ -29,6 +29,9 @@ app.use(bodyParser.json());
 var channels = {},
     systemChannel;
 
+app.get('/', function (req, res) {
+
+});
 app.post('/channels/', function (req, res) {
   let toRet = {};
   _.forEach(channels, function (value, key) {
@@ -52,7 +55,7 @@ app.post('/channel/new/', function (req, res) {
         console.log('Uruchomiłem kanał "/' + id + '"');
           socket.on('message', function (data) {
               console.log('/' + id + ':\n' + JSON.stringify(data, null, 2));
-              channels[id].emit('message', '/' + id + ': ' + data);
+              channels[id].channel.emit('message', data);
           });
       })
   };
@@ -98,7 +101,7 @@ channels.news = {
 systemChannel = io
   .of('/system')
   .on('connection', function (socket) {
-      console.log('someone has connected');
+      console.log('someone has connected to app');
       socket.on('system-message', function (data) {
         console.log('/news:\n' + JSON.stringify(data, null, 2));
         systemChannel.emit('system-message', data);
