@@ -1,30 +1,33 @@
-/*jshint globalstrict: true, devel: true, esversion: 6 */
+/*jshint node: true, esversion: 6 */
 'use strict';
 
-var fib = function fib(arg) {
-   if (arg <= 0) {
-       return 0;
-   }
-   if (arg === 1) {
-       return 1;
-   }
+function fib(arg) {
+  if (arg === 1) {
+    return 1;
+  }
+  if (arg <= 0) {
+     return 0;
+  }
    return fib(arg - 1) + fib(arg - 2);
-};
+}
 
-var memo = function (cache, fun) {
-  return function fibWithCache(arg) {
-    if (arg < cache.length) {
-      console.log(cache[arg]);
-      return cache[arg];
-    }
-    else console.log(cache.push(fibWithCache(arg-1) + fibWithCache(arg-2)));
-  };
-};
+function fibMemoized(arg, cache) {
+  if (!cache) {
+    cache = [0, 1];
+  }
+  if (arg < cache.length) {
+    // console.log(`fib(${arg}) taken from cache`);
+    return cache[arg];
+  }
+  else {
+    let result = fibMemoized(arg-1, cache) + fibMemoized(arg-2, cache);
+    cache[arg] = result;
+    // console.log(`inserted fib(${arg}) into cache`);
+    return result;
+  }
+}
 
-var fibonacci = memo([0, 1], function (recur, n) {
-    return recur(n - 1) + recur(n - 2);
-});
-
-console.log(fib(5));
-console.log(" === ");
-console.log(fibonacci(5));
+let arg = Number.parseInt(process.argv[2], 10);
+console.log(arg);
+console.log(fibMemoized(arg));
+console.log(fib(arg));
